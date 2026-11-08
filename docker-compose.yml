@@ -20,8 +20,11 @@ services:
     working_dir: /var/www/html
     volumes:
       - ./:/var/www/html
+      - ./docker/php/timezone.ini:/usr/local/etc/php/conf.d/timezone.ini:ro
     environment:
       DB_HOST: mysql
+      TZ: 'Europe/Moscow'
+      APP_TIMEZONE: 'Europe/Moscow'
     depends_on:
       mysql:
         condition: service_healthy
@@ -38,6 +41,8 @@ services:
       MYSQL_USER: ${DB_USERNAME}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      TZ: 'Europe/Moscow'
+    command: ["--default-time-zone=+03:00"]
     ports:
       - "127.0.0.1:3307:3306"
     volumes:
